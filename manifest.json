@@ -1,0 +1,6 @@
+{
+  "description": "Provides common logic for other plugins",
+  "dependencies": [
+    "BepInEx-BepInExPack_ForTheKing-5.4.19"
+  ]
+}
