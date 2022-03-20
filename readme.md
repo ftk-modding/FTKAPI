@@ -1,6 +1,6 @@
 # For The King API (FTKAPI) - Modding Library
 
-FTKModLib is a work-in-progress modding framework to aid developers in creating For The King mods, by providing centralized and simplified APIs for the game.
+FTKAPI is a work-in-progress modding framework to aid developers in creating For The King mods, by providing centralized and simplified APIs for the game.
 
 ## Documentation
 There is a provided example plugin(s) made with the use of the library located in the Examples folder.
