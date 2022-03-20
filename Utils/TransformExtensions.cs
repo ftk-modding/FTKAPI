@@ -18,7 +18,7 @@ public static class TransformExtensions
         transform.localScale = new Vector3(scaleOn4k * ResolutionFactorX, scaleOn4k * ResolutionFactorY, 1);
         return transform;
     }
-    public static RectTransform Scale(this RectTransform transform, float scale)
+    public static T Scale<T>(this T transform, float scale) where T : Transform
     {
         transform.localScale = new Vector3(scale, scale, scale);
         return transform;

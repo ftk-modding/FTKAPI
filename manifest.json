@@ -1,5 +1,8 @@
 {
+  "name": "FTKAPI",
   "description": "Provides common logic for other plugins",
+  "version_number": "0.1.0",
+  "website_url": "https://github.com/ftk-modding/ftkapi",
   "dependencies": [
     "BepInEx-BepInExPack_ForTheKing-5.4.19"
   ]

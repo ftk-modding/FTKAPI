@@ -32,6 +32,14 @@ When using `NetworkManager`, you can register object that can be instantiated on
 // MyPluginRpc.cs
 class MyPluginRpc : PunBehavior 
 {
+    public void Start() 
+    {
+        if (PhotonNetwork.IsMasterClient) 
+        {
+            SendMessage("Hello from master client");
+        }
+    }
+
     public void SendMessage(string message) 
     {
         this.photonView.RPC("SendMessagePRC", PhotonTargets.Others, message);
@@ -63,13 +71,12 @@ Then you can just call `NetworkManager.SpawnNetworkObject` with same id you prov
 ```c#
 // somewhere in-room
 var networkGameObject = NetworkManager.SpawnNetworkObject("MyPluginGuid.SyncObject");
-networkGameObject.SendMessage("Hello!");
-// other clients will log "Received 'Hello!'!"
+// other clients will log "Received 'Hello from master client!'" when object will be created."
 ```
 
 Note that in example above `SpawnOnRoomCreation` is set to `false` during registration, but it is `true` by default. So if you don't provide options, you don't have to create it manually.
 
-You can read more about networking in the official Photon reference: https://doc.photonengine.com/en-us/pun/v1/gameplay/rpcsandraiseevent
+You can read more about network synchronization FTK uses in the official Photon reference: https://doc.photonengine.com/en-us/pun/v1/gameplay/synchronization-and-state
 
 
 ## In-Game configuration

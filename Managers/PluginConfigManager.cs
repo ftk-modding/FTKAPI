@@ -97,7 +97,7 @@ public class PluginConfigManager : BaseManager<PluginConfigManager>
         panelTransform.SetParent(FTKHub.Instance.m_uiRoot.Find("SystemUI/OptionTarget/OptionMenu").transform);
         panelGo.SetActive(true);
         
-        panelTransform.ScaleResolutionBased();
+        panelTransform.Scale1();
         panelTransform.anchoredPosition = new Vector2(0, -200);
         panelTransform.anchorMin = new Vector2(0.5f, 1);
         panelTransform.anchorMax = new Vector2(0.5f, 1);
@@ -138,7 +138,7 @@ public class PluginConfigManager : BaseManager<PluginConfigManager>
         text.text = $"  [{name}]";
         text.fontStyle = FontStyle.Bold;
         transform.SetParent(parent);
-        transform.ScaleResolutionBased();
+        transform.Scale1();
         
         
         return go;
@@ -154,7 +154,7 @@ public class PluginConfigManager : BaseManager<PluginConfigManager>
                 v => entry.Value = v,
                 entry.Description);
             checkbox.transform.SetParent(parent);
-            checkbox.transform.ScaleResolutionBased();
+            checkbox.transform.Scale1();
         }
     }
     

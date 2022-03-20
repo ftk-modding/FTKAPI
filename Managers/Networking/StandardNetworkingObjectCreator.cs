@@ -24,6 +24,7 @@ public class StandardNetworkingObjectCreator : INetworkObjectCreator
         {
             name = this.Id
         };
+        go.SetActive(false);
         if (this.options.CreateRootPhotonView)
         {
             go.AddComponent<PhotonView>();
@@ -43,9 +44,10 @@ public class StandardNetworkingObjectCreator : INetworkObjectCreator
         {
             photonViews[index].viewID = viewIds[index];
         }
+        go.SetActive(true);
 
         return go;
-    }    
+    }
     
     public GameObject InstantiateNew(out int[] viewIds)
     {
@@ -53,6 +55,7 @@ public class StandardNetworkingObjectCreator : INetworkObjectCreator
         {
             name = this.Id
         };
+        go.SetActive(false);
         if (this.options.CreateRootPhotonView)
         {
             go.AddComponent<PhotonView>();
@@ -76,6 +79,7 @@ public class StandardNetworkingObjectCreator : INetworkObjectCreator
             }
             viewIds[index] = allocatedId;
         }
+        go.SetActive(true);
 
         return go;
     }
