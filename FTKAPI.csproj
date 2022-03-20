@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net35</TargetFramework>
+    <AssemblyName>FTKAPI</AssemblyName>
+    <Description>Collection of common logic for other plugins</Description>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <BuiltPluginDestPath></BuiltPluginDestPath>
+    <BuiltPluginDestPath2></BuiltPluginDestPath2>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+    <PackageReference Include="BepInEx.Core" Version="5.*" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
+    <PackageReference Include="UnityEngine.Modules" Version="2017.2.2" IncludeAssets="compile" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Libs\stripped-binaries" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>Libs\stripped-binaries\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>Libs\stripped-binaries\Assembly-CSharp-firstpass.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Photon3Unity3D, Version=4.1.1.14, Culture=neutral, PublicKeyToken=null">
+      <HintPath>Libs\stripped-binaries\Photon3Unity3D.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>Libs\stripped-binaries\UnityEngine.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="CopyCustomContent2" AfterTargets="Build" Condition="$(BuiltPluginDestPath) != ''">
+    <ItemGroup>
+      <_FilesToCopy Include="$(OutputPath)*.*;$(ProjectDir)readme.md" />
+    </ItemGroup>
+    <Message Text="Copying plugin files to '$(BuiltPluginDestPath)'" Importance="High" />
+    <Copy SourceFiles="@(_FilesToCopy)" DestinationFolder="$(BuiltPluginDestPath)" />
+  </Target>
+
+  <Target Name="CopyCustomContent3" AfterTargets="Build" Condition="$(BuiltPluginDestPath2) != ''">
+    <ItemGroup>
+      <_FilesToCopy Include="$(OutputPath)*.*;$(ProjectDir)readme.md" />
+    </ItemGroup>
+    <Message Text="Copying plugin files to '$(BuiltPluginDestPath2)'" Importance="High" />
+    <Copy SourceFiles="@(_FilesToCopy)" DestinationFolder="$(BuiltPluginDestPath2)" />
+  </Target>
+</Project>

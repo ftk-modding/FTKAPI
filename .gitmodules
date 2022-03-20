@@ -1,0 +1,3 @@
+[submodule "Libs/stripped-binaries"]
+	path = Libs/stripped-binaries
+	url = https://github.com/ftk-modding/stripped-binaries.git
