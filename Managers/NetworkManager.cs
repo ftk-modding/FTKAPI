@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FTKAPI.Compatibility;
 using FTKAPI.Managers.Networking;
 using FTKAPI.Utils;
 using HarmonyLib;
@@ -35,6 +36,20 @@ public class NetworkManager : BaseManager<NetworkManager>
     }
 
     /// <summary>
+    /// Sets Network Compatibility info for plugins that have FTKAPI as a soft-dependency.
+    /// </summary>
+    public static void SetNetworkCompatibility(BepInEx.PluginInfo plugin, NetworkCompatibility networkCompatibility) 
+    {
+        if (plugin.Instance.GetType().GetCustomAttributes(typeof(NetworkCompatibility), true).Any())
+        {
+            Plugin.Log.LogWarning($"{nameof(SetNetworkCompatibility)} should not be called for plugins that already have {nameof(NetworkCompatibility)} attribute. Call ignored.");
+            return;
+        }
+        
+        Plugin.Instance.NetworkCompatibilityHandler.SetNetworkCompatibility(plugin, networkCompatibility);
+    }
+
+    /// <summary>
     /// Registers custom GameObject factory that can spawn it on both client and server side with sync capabilities.
     /// NOTE: Try to avoid creating a lot of net objects, since you'll have to share with game and other plugins only 1000 "object slots" per player.  
     /// </summary>
@@ -42,7 +57,26 @@ public class NetworkManager : BaseManager<NetworkManager>
     {
         Instance.RegisterNetObject(new StandardNetworkingObjectCreator(id, initializer, options ?? new NetworkObjectOptions()));
     }
+    
+    /// <summary>
+    /// Registers custom GameObject factory that can spawn it on both client and server side with sync capabilities.
+    /// Use this overload to fully control GameObject creation process. 
+    /// NOTE: Try to avoid creating a lot of net objects, since you'll have to share with game and other plugins only 1000 "object slots" per player.  
+    /// </summary>
+    public void RegisterNetObject(INetworkObjectCreator creator)
+    {
+        if (this.netObjectCreators.ContainsKey(creator.Id))
+        {
+            Plugin.Log.LogError($"Cannot register net object '{creator.Id}' - key is already present");
+            return;
+        }
 
+        this.netObjectCreators[creator.Id] = creator;
+    }
+
+    /// <summary>
+    /// Spawns net object by key for all clients that have this key registered with RegisterNetObject call.  
+    /// </summary>
     public static GameObject SpawnNetworkObject(string key)
     {
         var creators = Instance.netObjectCreators;
@@ -58,16 +92,6 @@ public class NetworkManager : BaseManager<NetworkManager>
         return go;
     }
     
-    public void RegisterNetObject(INetworkObjectCreator creator)
-    {
-        if (this.netObjectCreators.ContainsKey(creator.Id))
-        {
-            Plugin.Log.LogError($"Cannot register net object '{creator.Id}' - key is already present");
-            return;
-        }
-
-        this.netObjectCreators[creator.Id] = creator;
-    }
 
     private void OnPhotonEventCall(byte eventcode, object content, int senderid)
     {

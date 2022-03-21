@@ -112,7 +112,7 @@ PluginConfigManager.Instance.RegisterSingleBinding(new CustomConfigurableEntry()
 
 ## Special thanks to
 
-[lulzsun](https://github.com/lulzsun)[FTKModLib](https://github.com/lulzsun/FTKModLib) that explicitly allowed me to re-use a lot of his code
+[lulzsun](https://github.com/lulzsun)/[FTKModLib](https://github.com/lulzsun/FTKModLib) that explicitly allowed me to re-use a lot of his code
 
 And by transitivity rule, all these other folks whose work helped him: 
 

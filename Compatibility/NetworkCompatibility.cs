@@ -95,6 +95,23 @@ internal class NetworkCompatibilityHandler {
         AddToNetworkModList();
     }
 
+    public void SetNetworkCompatibility(BepInEx.PluginInfo pluginInfo, NetworkCompatibility networkCompatibility) 
+    {
+        var modGuid = pluginInfo.Metadata.GUID;
+        var modVer = pluginInfo.Metadata.Version;
+        
+        if (networkCompatibility.CompatibilityLevel == CompatibilityLevel.EveryoneMustHaveMod)
+        {
+            var entry = networkCompatibility.VersionStrictness == VersionStrictness.EveryoneNeedSameModVersion
+                ? modGuid + ModGuidAndModVersionSeparator + modVer
+                : modGuid;
+            if (!this.ModList.Contains(entry))
+            {
+                this.ModList.Add(entry);
+            }
+        }
+    }
+
     private static void TryGetNetworkCompatibility(Type baseUnityPluginType, out NetworkCompatibility networkCompatibility) {
         networkCompatibility = new NetworkCompatibility();
 

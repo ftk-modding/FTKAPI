@@ -5,6 +5,7 @@
     <AssemblyName>FTKAPI</AssemblyName>
     <Description>Collection of common logic for other plugins</Description>
     <Version>0.1.0</Version>
+    <DocumentationFile>bin\Release\FTKAPI.xml</DocumentationFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <BuiltPluginDestPath></BuiltPluginDestPath>
